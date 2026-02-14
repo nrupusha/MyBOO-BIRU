@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -89,26 +88,51 @@ button {
     position: absolute;
     width: 150px;
     z-index: 1;
-    transition: 0.3s;
-    cursor: pointer;
+    animation: floatTeddy 4s ease-in-out infinite alternate;
 }
 
-#teddy1 { bottom: 20px; left: 20px; animation: floatTeddy 4s ease-in-out infinite alternate; }
-#teddy2 { bottom: 20px; right: 20px; animation: floatTeddy 4s ease-in-out 1s infinite alternate; }
+#teddy1 { bottom: 20px; left: 20px; }
+#teddy2 { bottom: 20px; right: 20px; }
 
-/* The NEW Middle Teddy */
-#teddy-mid { 
-    bottom: 10px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    width: 120px;
-    opacity: 0.8;
+/* --- KISSING TEDDY SECTION --- */
+.kissing-zone {
+    position: fixed;
+    bottom: -200px; /* Hidden initially */
+    left: 50%;
+    transform: translateX(-50%);
+    transition: 0.8s ease-out;
+    z-index: 5;
 }
-#teddy-mid:hover { transform: translateX(-50%) scale(1.2) rotate(5deg); opacity: 1; }
+
+.kissing-zone.active {
+    bottom: 20px;
+}
+
+.kissing-teddy-img {
+    width: 200px;
+    border-radius: 20px;
+}
+
+.boo-text {
+    color: #ff4d6d;
+    font-size: 24px;
+    font-weight: bold;
+    background: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    animation: bounce 1s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
 
 @keyframes floatTeddy { 0% { transform: translateY(0); } 100% { transform: translateY(-20px); } }
 
-/* Interactions */
 .kiss-btn {
     background: white;
     color: #ff4d6d;
@@ -119,12 +143,7 @@ button {
     font-weight: bold;
 }
 
-.heart {
-    position: absolute;
-    color: #ff4d6d;
-    pointer-events: none;
-    z-index: 40;
-}
+.heart { position: absolute; color: #ff4d6d; pointer-events: none; z-index: 40; }
 
 @keyframes floatUp {
     0% { transform: translateY(0) scale(1); opacity: 1; }
@@ -144,14 +163,17 @@ button {
     transition: 0.4s;
 }
 .popup.show { transform: translate(-50%, -50%) scale(1); }
-
 </style>
 </head>
 <body>
 
-<img src="teddy1.gif" class="teddy" id="teddy1" title="I love you!">
-<img src="teddy2.gif" class="teddy" id="teddy2" title="Miss you!">
-<img src="teddy3.gif" class="teddy" id="teddy-mid" title="Click me!">
+<img src="teddy1.gif" class="teddy" id="teddy1">
+<img src="teddy2.gif" class="teddy" id="teddy2">
+
+<div class="kissing-zone" id="kissingZone">
+    <div class="boo-text">I love my BOO! 💋</div><br>
+    <img src="kissing-teddies.gif" class="kissing-teddy-img">
+</div>
 
 <div class="container">
     <h1>Will You Be My Valentine? 💖</h1>
@@ -174,7 +196,7 @@ button {
         Please come back. I MISS YOU!! 😢💖
         
         <br>
-        <button class="kiss-btn" onclick="burstKisses()">Send a Kiss 💋</button>
+        <button class="kiss-btn" onclick="triggerKiss()">Send a Kiss 💋</button>
     </div>
     <button style="margin-top:20px; background:rgba(255,255,255,0.3); color:white; border:1px solid white; font-size:14px;" onclick="closeHeartNote()">Close 💌</button>
 </div>
@@ -194,7 +216,10 @@ function closePopup() {
     document.getElementById("heartNote").classList.add("show");
 }
 
-function closeHeartNote() { document.getElementById("heartNote").classList.remove("show"); }
+function closeHeartNote() { 
+    document.getElementById("heartNote").classList.remove("show");
+    document.getElementById("kissingZone").classList.remove("active"); 
+}
 
 function moveButton() {
     const btn = document.getElementById("noBtn");
@@ -203,9 +228,13 @@ function moveButton() {
     btn.style.top = Math.random() * 80 + 'vh';
 }
 
-// Burst Kisses Interaction
-function burstKisses() {
-    for(let i=0; i<20; i++) {
+// Trigger Kissing Teddies and Hearts
+function triggerKiss() {
+    // Show the kissing teddies
+    document.getElementById("kissingZone").classList.add("active");
+    
+    // Burst hearts
+    for(let i=0; i<25; i++) {
         setTimeout(createHeart, i * 50, true);
     }
 }
@@ -222,14 +251,8 @@ function createHeart(isKiss = false) {
     setTimeout(() => heart.remove(), 5000);
 }
 
-// Background floating hearts
-setInterval(() => createHeart(false), 500);
-
-// Interaction for the middle teddy
-document.getElementById('teddy-mid').onclick = function() {
-    burstKisses();
-    alert("Teddy says: I love you too!");
-};
+// Background hearts
+setInterval(() => createHeart(false), 600);
 </script>
 </body>
 </html>
