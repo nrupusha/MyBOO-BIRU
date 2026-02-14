@@ -85,46 +85,52 @@ button {
 
 .popup.show { transform: translate(-50%, -50%) scale(1); }
 
-/* Heart shaped note */
+/* Updated Heart shaped note */
 .heart-note {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    width: 520px;  /* bigger width */
-    height: 520px; /* bigger height */
-    background: #ffb6c1;
+    /* Made it bigger */
+    width: 500px;  
+    height: 450px; 
+    max-width: 95vw; /* Ensures it fits on mobile screens */
+    background: #ff4d6d; /* A slightly deeper pink for better contrast */
+    
+    /* Smoother Heart Shape using a better polygon */
     clip-path: polygon(
-        50% 0%, 61% 10%, 68% 25%, 75% 15%, 
-        90% 25%, 95% 40%, 100% 50%, 95% 60%, 
-        90% 75%, 75% 85%, 68% 90%, 61% 95%, 
-        50% 100%, 39% 95%, 32% 90%, 25% 85%, 
-        10% 75%, 5% 60%, 0 50%, 5% 40%, 
-        10% 25%, 25% 15%, 32% 25%, 39% 10%
+        50% 15%, 65% 2%, 85% 2%, 100% 20%, 100% 45%, 
+        50% 95%, 0% 45%, 0% 20%, 15% 2%, 35% 2%
     );
+
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 20px;
+    padding: 60px 40px; /* Increased padding so text stays in the "fat" part of the heart */
     color: white;
-    font-size: 14px;
-    font-weight: bold;
-    overflow-y: auto; /* scroll if text too long */
+    font-size: 18px; /* Slightly bigger font */
+    font-family: 'Georgia', serif; /* A more romantic font style */
     z-index: 10;
     transition: 0.5s;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* Heart beating animation */
-@keyframes heartbeat {
-    0%, 100% { transform: translate(-50%, -50%) scale(1); }
-    25% { transform: translate(-50%, -50%) scale(1.05); }
-    50% { transform: translate(-50%, -50%) scale(1.1); }
-    75% { transform: translate(-50%, -50%) scale(1.05); }
+.heart-note.show { 
+    transform: translate(-50%, -50%) scale(1); 
+    animation: heartbeat 1.5s infinite; 
 }
 
-.heart-note.show { transform: translate(-50%, -50%) scale(1); animation: heartbeat 1.5s infinite; }
+/* Adjusting the text container inside to fit the heart lobes */
+.heart-note div {
+    overflow-y: auto; 
+    max-height: 70%; 
+    width: 100%;
+    padding: 10px;
+    scrollbar-width: none; /* Hides scrollbar for a cleaner look */
+}
+.heart-note div::-webkit-scrollbar { display: none; }
 
 /* Glitter sparkles */
 .sparkle {
