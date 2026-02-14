@@ -91,8 +91,8 @@ button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    width: 420px;  /* bigger width */
-    height: 420px; /* bigger height */
+    width: 520px;  /* bigger width */
+    height: 520px; /* bigger height */
     background: #ffb6c1;
     clip-path: polygon(
         50% 0%, 61% 10%, 68% 25%, 75% 15%, 
@@ -109,7 +109,7 @@ button {
     text-align: center;
     padding: 20px;
     color: white;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
     overflow-y: auto; /* scroll if text too long */
     z-index: 10;
@@ -148,12 +148,12 @@ button {
 /* Teddy GIFs */
 .teddy {
     position: absolute;
-    width: 80px;
+    width: 180px;
     z-index: 1;
     animation: floatTeddy 4s ease-in-out infinite alternate;
 }
 
-#teddy1 { bottom: 10px; left: 10px; }
+#teddy1 { bottom: 20px; left: 20px; }
 #teddy2 { bottom: 10px; right: 10px; }
 
 @keyframes floatTeddy { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
